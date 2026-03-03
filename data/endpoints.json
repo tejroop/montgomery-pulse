@@ -1,0 +1,148 @@
+{
+  "datasets": {
+    "911_calls": {
+      "name": "911 Calls",
+      "url": "https://services7.arcgis.com/xNUwUjOJqYE54USz/arcgis/rest/services/911_Calls_Data/FeatureServer",
+      "dimension": "incident_density",
+      "priority": "CRITICAL"
+    },
+    "fire_police_station": {
+      "name": "Fire and Police Station",
+      "url": "https://services7.arcgis.com/xNUwUjOJqYE54USz/arcgis/rest/services/Story_Map___Live__1__WFL1/FeatureServer",
+      "dimension": "emergency_coverage",
+      "priority": "CRITICAL"
+    },
+    "environmental_nuisance": {
+      "name": "Environmental Nuisance (Old)",
+      "url": "https://services7.arcgis.com/xNUwUjOJqYE54USz/arcgis/rest/services/Environmental_Nuisance/FeatureServer",
+      "dimension": "environmental_risk",
+      "priority": "CRITICAL"
+    },
+    "code_violations": {
+      "name": "Code Violations",
+      "url": "https://gis.montgomeryal.gov/server/rest/services/HostedDatasets/Code_Violations/FeatureServer/0",
+      "dimension": "environmental_risk",
+      "priority": "CRITICAL"
+    },
+    "tornado_shelter": {
+      "name": "Tornado Shelter",
+      "url": "https://services7.arcgis.com/xNUwUjOJqYE54USz/arcgis/rest/services/Tornado_Shelter/FeatureServer",
+      "dimension": "emergency_coverage",
+      "priority": "CRITICAL"
+    },
+    "weather_sirens": {
+      "name": "Weather Sirens",
+      "url": "https://services7.arcgis.com/xNUwUjOJqYE54USz/arcgis/rest/services/Weather_Sirens/FeatureServer",
+      "dimension": "emergency_coverage",
+      "priority": "CRITICAL"
+    },
+    "311_service_requests": {
+      "name": "Received 311 Service Requests",
+      "url": "https://gis.montgomeryal.gov/server/rest/services/HostedDatasets/Received_311_Service_Request/MapServer/0",
+      "dimension": "infrastructure_health",
+      "priority": "HIGH"
+    },
+    "traffic_engineering_kpi": {
+      "name": "Traffic Engineering Key Performance Indicators",
+      "url": "https://services7.arcgis.com/xNUwUjOJqYE54USz/arcgis/rest/services/Traffic_Engineering_Key_Performance_Indicators/FeatureServer",
+      "dimension": "infrastructure_health",
+      "priority": "HIGH"
+    },
+    "traffic_engineering_requests": {
+      "name": "Traffic Engineering Service Requests",
+      "url": "https://services7.arcgis.com/xNUwUjOJqYE54USz/arcgis/rest/services/Traffic_Engineering_Requests/FeatureServer",
+      "dimension": "infrastructure_health",
+      "priority": "HIGH"
+    },
+    "zoning": {
+      "name": "Zoning",
+      "url": "https://gis.montgomeryal.gov/server/rest/services/Zoning/MapServer/2",
+      "dimension": "boundaries",
+      "priority": "CRITICAL"
+    },
+    "city_limit": {
+      "name": "City Limit",
+      "url": "https://gis.montgomeryal.gov/server/rest/services/HostedDatasets/City_Limit/MapServer/0",
+      "dimension": "boundaries",
+      "priority": "CRITICAL"
+    },
+    "community_centers": {
+      "name": "Community Centers",
+      "url": "https://services7.arcgis.com/xNUwUjOJqYE54USz/arcgis/rest/services/Community_Center/FeatureServer",
+      "dimension": "resource_overlay",
+      "priority": "MEDIUM"
+    },
+    "daily_population": {
+      "name": "Daily Population Trends",
+      "url": "https://services7.arcgis.com/xNUwUjOJqYE54USz/arcgis/rest/services/Daily_Population_Trends/FeatureServer",
+      "dimension": "normalization",
+      "priority": "MEDIUM"
+    },
+    "food_scores": {
+      "name": "Food Scores",
+      "url": "https://services7.arcgis.com/xNUwUjOJqYE54USz/arcgis/rest/services/Food_Scoring/FeatureServer",
+      "dimension": "economic_vitality",
+      "priority": "MEDIUM"
+    },
+    "parks_trails": {
+      "name": "Parks and Trail",
+      "url": "https://services7.arcgis.com/xNUwUjOJqYE54USz/arcgis/rest/services/Park_and_Trail/FeatureServer",
+      "dimension": "resource_overlay",
+      "priority": "LOW"
+    },
+    "education_facility": {
+      "name": "Education Facility",
+      "url": "https://services7.arcgis.com/xNUwUjOJqYE54USz/arcgis/rest/services/Education_Facility/FeatureServer",
+      "dimension": "resource_overlay",
+      "priority": "LOW"
+    },
+    "pharmacy_locator": {
+      "name": "Pharmacy Locator",
+      "url": "https://services7.arcgis.com/xNUwUjOJqYE54USz/arcgis/rest/services/Pharmacy_Locator/FeatureServer",
+      "dimension": "resource_overlay",
+      "priority": "LOW"
+    },
+    "business_license": {
+      "name": "Business License",
+      "url": "https://gis.montgomeryal.gov/server/rest/services/HostedDatasets/Business_License/FeatureServer/0",
+      "dimension": "economic_vitality",
+      "priority": "LOW"
+    },
+    "construction_permits": {
+      "name": "Construction Permit Data",
+      "url": "https://gis.montgomeryal.gov/server/rest/services/HostedDatasets/Construction_Permits/FeatureServer/0",
+      "dimension": "economic_vitality",
+      "priority": "LOW"
+    },
+    "most_visited": {
+      "name": "Most Visited Locations",
+      "url": "https://services7.arcgis.com/xNUwUjOJqYE54USz/arcgis/rest/services/Most_Visited_Locations/FeatureServer",
+      "dimension": "context",
+      "priority": "LOW"
+    },
+    "paving_project": {
+      "name": "Paving Project",
+      "url": "https://gis.montgomeryal.gov/server/rest/services/HostedDatasets/Paving_Project/MapServer/0",
+      "dimension": "infrastructure_health",
+      "priority": "LOW"
+    },
+    "point_of_interest": {
+      "name": "Point of Interest",
+      "url": "https://services7.arcgis.com/xNUwUjOJqYE54USz/arcgis/rest/services/Point_of_Interest/FeatureServer",
+      "dimension": "context",
+      "priority": "LOW"
+    },
+    "visitors_origin": {
+      "name": "Visitors Origin",
+      "url": "https://services7.arcgis.com/xNUwUjOJqYE54USz/arcgis/rest/services/Visitors_Origin/FeatureServer",
+      "dimension": "context",
+      "priority": "LOW"
+    },
+    "downtown_parking": {
+      "name": "Downtown Parking",
+      "url": "https://services7.arcgis.com/xNUwUjOJqYE54USz/arcgis/rest/services/Parking_Meters/FeatureServer",
+      "dimension": "context",
+      "priority": "LOW"
+    }
+  }
+}
