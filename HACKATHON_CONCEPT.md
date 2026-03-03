@@ -84,20 +84,57 @@ Vite, React 18, TypeScript, Tailwind CSS, Leaflet, Recharts, Python (geopandas/s
 
 ---
 
-## Scoring Alignment
+## Scoring Alignment (35 total points)
 
-| Criterion | Points | How We Score |
-|-----------|--------|-------------|
-| **Consistency** | 15 | Uses 19/24 datasets. Every data source connects to a scoring dimension. Unified schema from raw ArcGIS to final GeoJSON. |
-| **Quality & Design** | 10 | Dark-theme professional UI. Animated transitions. Radar charts. AI insight cards. Responsive. Custom tooltip styling. |
-| **Originality & Impact** | 10 | "Safety Deserts" concept is novel — no existing Montgomery tool surfaces this. Rule-based AI insights without requiring LLM infrastructure. |
-| **Commercialisation** | 5 | See below. |
+### 1. Relevance to Challenge (10 pts)
 
----
+MontgomeryPulse directly targets **Stream 4: Public Safety, Emergency Response & City Analytics**. Every feature maps to this challenge:
 
-## Commercialization Strategy
+- **Public Safety**: Composite Safety Context Score ranks 403 neighborhoods by risk level, using 311 complaints, code violations, and environmental nuisance as primary signals.
+- **Emergency Response**: Emergency Coverage dimension measures actual distance gaps to fire/police stations, tornado shelters, and weather sirens. The "Safety Desert" concept identifies the 20 neighborhoods where emergencies are most likely AND response times are longest.
+- **City Analytics**: City-wide header bar aggregates 312K+ 911 calls, traffic infrastructure KPIs, and daily population data. Score distribution chart gives planners an at-a-glance city health snapshot.
 
-### Immediate Revenue Path: SaaS for Municipalities
+**Data coverage**: Uses 19 of 24 available Montgomery datasets — every dataset is connected to a specific scoring dimension, not just displayed for show.
+
+### 2. Quality & Design (10 pts)
+
+- Professional dark-theme UI designed for data-heavy civic applications
+- Smooth animated transitions (slide-in detail panel, fly-to map zoom)
+- Radar chart visualizing all 4 dimensions simultaneously
+- AI-powered context insight cards that explain WHY a neighborhood is at risk in plain language
+- Color-coded score gradient (green → yellow → orange → red) consistent across map, sidebar, and detail panel
+- Interactive facility overlay with 7 toggleable categories and 379 map markers
+- Score distribution bar chart in sidebar for city-wide pattern recognition
+- Custom-styled Leaflet tooltips matching the dark theme
+- Responsive layout for tablet and desktop viewing
+- Loading states with branded animation
+
+### 3. Originality (5 pts)
+
+- **"Safety Deserts" concept** — No existing Montgomery tool reveals neighborhoods where high civic demand intersects with poor emergency infrastructure. This is an original analytical framework.
+- **Rule-based AI insights** — Generates contextual, plain-language explanations ("The nearest fire or police station is 4.8 km away — well above the city's average") without requiring an LLM, API keys, or cloud infrastructure. Indistinguishable from AI-generated content in a demo.
+- **Neighborhood-level scoring from zoning data** — Montgomery doesn't publish neighborhood boundaries. We created 403 neighborhoods by grid-clustering 2,036 zoning polygons, then named them using 25 known Montgomery area names and 100+ landmarks from the Most Visited and POI datasets.
+- **Zero-backend architecture** — The entire app is static files. No server, no database, no cold starts. Deployable for free on any static host.
+
+### 4. Social Impact (5 pts)
+
+MontgomeryPulse addresses **equity in public safety** — one of the most pressing challenges facing American cities.
+
+**The problem it exposes**: Safety resources in Montgomery are not distributed equally. Our analysis reveals that 20 neighborhoods — home to thousands of residents — qualify as Safety Deserts: areas where civic complaints are 30%+ above the median while the nearest fire or police station is significantly farther than average.
+
+**Who benefits**:
+- **Residents in underserved neighborhoods** gain a data-backed tool to advocate for better emergency coverage. Instead of anecdotal complaints, they can point to composite scores and distance metrics that quantify their vulnerability.
+- **City council members** can use neighborhood-level scores to prioritize budget allocation for new fire stations, tornado shelters, or community centers where the need is objectively greatest.
+- **Community organizers** can identify which Safety Deserts also lack pharmacies, parks, and schools — revealing compounding resource gaps that affect daily quality of life, not just emergencies.
+- **Emergency planners** can visualize response distance gaps and plan new infrastructure to reduce them.
+
+**Equity lens**: By combining complaint density with coverage gaps, MontgomeryPulse ensures that neighborhoods aren't just ranked by "how many problems they have" — it highlights where people are reporting problems AND where the city's safety net has the biggest holes. This reframes public safety from a policing question to an infrastructure equity question.
+
+**Transparency and access**: The tool uses 100% public data, requires no login, and costs nothing to access. Any Montgomery resident can see their neighborhood's score and understand why it was calculated that way.
+
+### 5. Commercial Potential (5 pts)
+
+#### Immediate Revenue Path: SaaS for Municipalities
 
 **MontgomeryPulse as a Service** — a white-label civic safety analytics platform that any city can deploy with their own ArcGIS data.
 
@@ -130,7 +167,7 @@ Vite, React 18, TypeScript, Tailwind CSS, Leaflet, Recharts, Python (geopandas/s
 - **5-minute deployment** — upload data, get a dashboard
 - **Open data native** — designed for public datasets, no PII concerns
 
-### Additional Revenue Streams
+#### Additional Revenue Streams
 - **Consulting**: Custom dimension development ($5K-20K per engagement)
 - **Data partnerships**: Real estate platforms (Zillow, Redfin) pay for neighborhood safety scores
 - **Insurance**: Provide risk scoring to property insurers for premium calculation
@@ -142,12 +179,12 @@ Vite, React 18, TypeScript, Tailwind CSS, Leaflet, Recharts, Python (geopandas/s
 
 **[0:00-0:15]** Hook: "What if you could see which Montgomery neighborhoods have the highest civic demand but the worst emergency coverage? MontgomeryPulse reveals these invisible gaps."
 
-**[0:15-0:40]** Overview: Show the full map with the city header stats. Point out the color gradient from green (safe) to red (at-risk).
+**[0:15-0:40]** Overview: Show the full map with the city header stats. Point out the color gradient from green (safe) to red (at-risk). Mention: "We processed 19 city datasets — over 290,000 data points — into a safety context score for every neighborhood."
 
-**[0:40-1:10]** Deep dive: Click a Safety Desert neighborhood. Show the detail panel — composite score, radar chart, AI insights explaining WHY it's at risk. Highlight the "Critical Emergency Coverage Gap" insight.
+**[0:40-1:10]** Deep dive: Click a Safety Desert neighborhood. Show the detail panel — composite score, radar chart, AI insights explaining WHY it's at risk. Highlight the "Critical Emergency Coverage Gap" insight. Say: "This neighborhood has over 3,000 service requests, but the nearest fire station is almost 5 kilometers away. That's a Safety Desert."
 
-**[1:10-1:30]** Facilities: Toggle on fire/police stations and tornado shelters. Visually demonstrate the gap — Safety Deserts are far from emergency infrastructure.
+**[1:10-1:30]** Facilities: Toggle on fire/police stations and tornado shelters. Visually demonstrate the gap — Safety Deserts are far from emergency infrastructure. Say: "When we overlay emergency infrastructure, the gaps become visible. These red zones are where people need help most, but help is farthest away."
 
-**[1:30-1:50]** Sidebar: Show the search, sort by "Safety Deserts", demonstrate the score distribution chart. Quickly click between a safe and at-risk neighborhood to contrast.
+**[1:30-1:50]** Social impact: Click a well-served green neighborhood for contrast. Say: "Compare that to this neighborhood — low complaints, fire station less than a kilometer away, pharmacy and community center nearby. MontgomeryPulse makes these disparities impossible to ignore."
 
-**[1:50-2:00]** Close: "MontgomeryPulse turns 19 city datasets into actionable neighborhood intelligence. Built with zero backend — just data, code, and purpose."
+**[1:50-2:00]** Close: "MontgomeryPulse turns 19 city datasets into actionable neighborhood intelligence — built with zero backend, deployable for free, and designed to make public safety equitable. Thank you."
