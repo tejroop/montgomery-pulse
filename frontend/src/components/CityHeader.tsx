@@ -1,5 +1,6 @@
 import { useEffect, useState, useMemo } from 'react';
 import type { NeighborhoodCollection } from '../types';
+import SyncStatus from './SyncStatus';
 
 interface CityStats {
   '911_calls': {
@@ -77,6 +78,9 @@ export default function CityHeader({ data }: Props) {
           <span className="text-[10px] text-slate-500 uppercase">{stat.label}</span>
         </div>
       ))}
+      <div className="ml-auto flex-shrink-0">
+        <SyncStatus />
+      </div>
     </div>
   );
 }

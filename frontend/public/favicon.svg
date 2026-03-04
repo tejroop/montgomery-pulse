@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <rect width="100" height="100" rx="20" fill="#0f172a"/>
+  <circle cx="50" cy="50" r="35" fill="#064e3b"/>
+  <text x="50" y="58" text-anchor="middle" font-family="system-ui" font-weight="900" font-size="28" fill="#34d399">MP</text>
+</svg>

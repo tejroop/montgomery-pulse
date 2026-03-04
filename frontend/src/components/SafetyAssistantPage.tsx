@@ -3,7 +3,6 @@ import type { NeighborhoodCollection, NeighborhoodFeature } from '../types';
 import {
   answerSafetyQuestion,
   getSuggestedQuestions,
-  explainCityOverview,
   type ChatMessage,
   type SafetyChatContext,
 } from '../safetyAI';
