@@ -1,5 +1,5 @@
 import { createContext, useContext, useState, useEffect, useCallback, useRef } from 'react';
-import { supabase, isSupabaseConfigured } from '../lib/supabase';
+import { supabase } from '../lib/supabase';
 import type { User, RealtimeChannel } from '@supabase/supabase-js';
 
 const APP_TYPE = 'montgomery_pulse';
@@ -67,7 +67,7 @@ export function SyncProvider({ children }: { children: React.ReactNode }) {
   const [syncStatus, setSyncStatus] = useState<'offline' | 'syncing' | 'synced' | 'error'>('offline');
   const [isOnline, setIsOnline] = useState(navigator.onLine);
   const channelRef = useRef<RealtimeChannel | null>(null);
-  const debounceRef = useRef<ReturnType<typeof setTimeout>>();
+  const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   // Online/offline detection
   useEffect(() => {
@@ -103,7 +103,7 @@ export function SyncProvider({ children }: { children: React.ReactNode }) {
     const loadRemote = async () => {
       setSyncStatus('syncing');
       try {
-        const { data, error } = await supabase
+        const { data, error } = await supabase!
           .from('user_state')
           .select('state_value')
           .eq('user_id', user.id)
@@ -155,7 +155,7 @@ export function SyncProvider({ children }: { children: React.ReactNode }) {
     if (!supabase || !user) return;
     setSyncStatus('syncing');
     try {
-      await supabase
+      await supabase!
         .from('user_state')
         .upsert({
           user_id: user.id,
