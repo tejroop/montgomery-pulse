@@ -1,7 +1,10 @@
-# MontgomeryPulse — Community Safety Lens
+# MontgomeryPulse — Community Safety Lens with Explainable AI
 
 ## Challenge Stream
 **Stream 4: Public Safety, Emergency Response & City Analytics**
+
+### Core Differentiator: Explainable AI Safety Assistant
+MontgomeryPulse includes a **3-layer Explainable AI Safety Assistant** that translates complex safety data into plain-language insights for citizens, city planners, and emergency management. Every score, rating, and recommendation can be questioned and answered transparently — no black boxes.
 
 ---
 
@@ -79,6 +82,16 @@ ArcGIS REST APIs → Python Pipeline → Static JSON → React Frontend
 - Facility overlay with 7 toggleable categories (379 points)
 - City-wide stats header bar with 911, 311, and infrastructure KPIs
 
+### Explainable AI Safety Assistant (3 Layers)
+
+**Layer 1: Deep Analysis in Detail Panel** — When you click any neighborhood, an "AI: Explain This Neighborhood" button reveals three contextual cards: Why This Rating (traces the score to specific dimensions), Recommended Action (prioritized interventions based on risk level), and Emergency & Resource Access (equity analysis of distances to essential services). Works alongside the existing AI Context Insight cards.
+
+**Layer 2: Chat Panel Overlay** — A floating emerald-themed chat assistant on the map page. Users ask natural-language questions like "Why is this area rated high-risk?" or "Which neighborhoods are Safety Deserts?" and receive data-backed explanations. Context-aware: selecting a neighborhood on the map updates the assistant's context automatically.
+
+**Layer 3: Full-Page Safety Explorer** — A dedicated assistant page with a Safety Desert browser sidebar, city statistics dashboard, and full conversational interface. Click any at-risk neighborhood to auto-generate an explanation, then navigate directly to the map for spatial context.
+
+**How it works**: Rule-based Natural Language Generation (NLG) — no external LLM API required. Every explanation is deterministic, auditable, and traces to specific data points. Topics covered: safety score analysis, recommended actions, emergency access equity, city-wide overview, Safety Desert identification, scoring methodology, resident guidance, and data sources.
+
 ### Tech Stack
 Vite, React 18, TypeScript, Tailwind CSS, Leaflet, Recharts, Python (geopandas/shapely)
 
@@ -112,7 +125,7 @@ MontgomeryPulse directly targets **Stream 4: Public Safety, Emergency Response &
 ### 3. Originality (5 pts)
 
 - **"Safety Deserts" concept** — No existing Montgomery tool reveals neighborhoods where high civic demand intersects with poor emergency infrastructure. This is an original analytical framework.
-- **Rule-based AI insights** — Generates contextual, plain-language explanations ("The nearest fire or police station is 4.8 km away — well above the city's average") without requiring an LLM, API keys, or cloud infrastructure. Indistinguishable from AI-generated content in a demo.
+- **Explainable AI Safety Assistant** — A 3-layer AI system (deep analysis cards + chat overlay + full-page explorer) that translates raw safety data into plain-language insights. Unlike opaque AI dashboards, every explanation is deterministic and auditable — true explainability. Citizens can ask "Why is my neighborhood rated this way?" and get an answer that traces to specific data.
 - **Neighborhood-level scoring from zoning data** — Montgomery doesn't publish neighborhood boundaries. We created 403 neighborhoods by grid-clustering 2,036 zoning polygons, then named them using 25 known Montgomery area names and 100+ landmarks from the Most Visited and POI datasets.
 - **Zero-backend architecture** — The entire app is static files. No server, no database, no cold starts. Deployable for free on any static host.
 
@@ -131,6 +144,8 @@ MontgomeryPulse addresses **equity in public safety** — one of the most pressi
 **Equity lens**: By combining complaint density with coverage gaps, MontgomeryPulse ensures that neighborhoods aren't just ranked by "how many problems they have" — it highlights where people are reporting problems AND where the city's safety net has the biggest holes. This reframes public safety from a policing question to an infrastructure equity question.
 
 **Transparency and access**: The tool uses 100% public data, requires no login, and costs nothing to access. Any Montgomery resident can see their neighborhood's score and understand why it was calculated that way.
+
+**Explainable AI & Equity**: The AI Safety Assistant democratizes data access. A resident with no technical background can ask "Why is my neighborhood a Safety Desert?" and get the same quality analysis a city planner would. This levels the information playing field for civic advocacy.
 
 ### 5. Commercial Potential (5 pts)
 
@@ -164,6 +179,8 @@ MontgomeryPulse addresses **equity in public safety** — one of the most pressi
 #### Competitive Advantage
 - **Zero infrastructure cost** — static files, no servers to maintain
 - **Works with existing ArcGIS investments** — cities don't need new data infrastructure
+- **Explainable AI** — cities can justify resource allocation decisions because every recommendation is auditable and traceable to source data
+- **Consumer-grade AI assistant** makes government-grade safety data accessible to every resident
 - **5-minute deployment** — upload data, get a dashboard
 - **Open data native** — designed for public datasets, no PII concerns
 
@@ -177,14 +194,16 @@ MontgomeryPulse addresses **equity in public safety** — one of the most pressi
 
 ## Demo Video Script (2 minutes)
 
-**[0:00-0:15]** Hook: "What if you could see which Montgomery neighborhoods have the highest civic demand but the worst emergency coverage? MontgomeryPulse reveals these invisible gaps."
+**[0:00-0:10]** Hook: "What if an AI could explain exactly why your neighborhood is underserved — and what to do about it? MontgomeryPulse combines safety analytics with an Explainable AI assistant."
 
-**[0:15-0:40]** Overview: Show the full map with the city header stats. Point out the color gradient from green (safe) to red (at-risk). Mention: "We processed 19 city datasets — over 290,000 data points — into a safety context score for every neighborhood."
+**[0:10-0:25]** Overview: Show the full map with city header stats. "We processed 19 city datasets — over 290,000 data points — into a safety score for every neighborhood."
 
-**[0:40-1:10]** Deep dive: Click a Safety Desert neighborhood. Show the detail panel — composite score, radar chart, AI insights explaining WHY it's at risk. Highlight the "Critical Emergency Coverage Gap" insight. Say: "This neighborhood has over 3,000 service requests, but the nearest fire station is almost 5 kilometers away. That's a Safety Desert."
+**[0:25-0:45]** Safety Desert: Click a red Safety Desert neighborhood. Show the detail panel with radar chart and AI insights. "This neighborhood has 3,000+ service requests but the nearest fire station is 5 km away. That's a Safety Desert."
 
-**[1:10-1:30]** Facilities: Toggle on fire/police stations and tornado shelters. Visually demonstrate the gap — Safety Deserts are far from emergency infrastructure. Say: "When we overlay emergency infrastructure, the gaps become visible. These red zones are where people need help most, but help is farthest away."
+**[0:45-1:05]** AI Deep Analysis: Click "AI: Explain This Neighborhood" in the detail panel. Show three insight cards: Why This Rating, Recommended Action, Emergency Access. "The AI traces every rating back to real data — no black boxes."
 
-**[1:30-1:50]** Social impact: Click a well-served green neighborhood for contrast. Say: "Compare that to this neighborhood — low complaints, fire station less than a kilometer away, pharmacy and community center nearby. MontgomeryPulse makes these disparities impossible to ignore."
+**[1:05-1:25]** Chat Panel: Click the AI chat bubble. Ask "Which neighborhoods are Safety Deserts?" Show the response listing the most vulnerable areas with explanations. "Citizens can ask natural-language questions and get data-backed answers."
 
-**[1:50-2:00]** Close: "MontgomeryPulse turns 19 city datasets into actionable neighborhood intelligence — built with zero backend, deployable for free, and designed to make public safety equitable. Thank you."
+**[1:25-1:45]** Full Assistant: Click "Safety Assistant" in top-right. Show the full-page explorer with neighborhood browser and conversational interface. Click a critical area to auto-generate an explanation. "A dedicated AI page makes all 403 neighborhoods explorable through conversation."
+
+**[1:45-2:00]** Close: "MontgomeryPulse — Explainable AI for community safety. Every score traceable, every recommendation auditable, every citizen empowered. Thank you."

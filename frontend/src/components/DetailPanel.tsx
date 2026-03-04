@@ -1,7 +1,9 @@
+import { useState } from 'react';
 import type { NeighborhoodFeature } from '../types';
 import { getScoreColor, getRiskLabel, getTrendIcon, getTrendColor } from '../utils';
 import RadarChart from './RadarChart';
 import InsightCards from './InsightCard';
+import { explainSafetyScore, explainSafetyAction, explainEmergencyAccess } from '../safetyAI';
 
 interface Props {
   feature: NeighborhoodFeature;
@@ -35,6 +37,7 @@ function ScoreBar({ label, score }: { label: string; score: number }) {
 }
 
 export default function DetailPanel({ feature, onClose }: Props) {
+  const [showAI, setShowAI] = useState(false);
   const p = feature.properties;
   const riskLabel = getRiskLabel(p.composite_score);
   const scoreColor = getScoreColor(p.composite_score);
@@ -126,6 +129,52 @@ export default function DetailPanel({ feature, onClose }: Props) {
 
       {/* AI Context Insights */}
       <InsightCards properties={p} />
+
+      {/* AI Deep Explainer */}
+      <div className="px-4 py-3 border-t border-slate-700">
+        <button
+          onClick={() => setShowAI(!showAI)}
+          className="w-full flex items-center justify-center gap-2 py-2.5 px-4 rounded-lg bg-emerald-500/10 border border-emerald-500/30 hover:border-emerald-500/50 transition-all text-sm font-semibold text-emerald-400"
+        >
+          <span className="text-base">🧠</span>
+          {showAI ? 'Hide AI Deep Analysis' : 'AI: Explain This Neighborhood'}
+          <svg className={`w-3 h-3 transition-transform ${showAI ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+          </svg>
+        </button>
+
+        {showAI && (
+          <div className="mt-3 space-y-3 fade-in">
+            <div className="p-3 rounded-lg bg-emerald-500/5 border border-emerald-500/20">
+              <div className="flex items-center gap-1.5 mb-1.5">
+                <div className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+                <span className="text-[10px] font-bold text-emerald-400 uppercase tracking-wider">Why This Rating</span>
+              </div>
+              <p className="text-[11px] text-slate-300 leading-relaxed">{explainSafetyScore(p)}</p>
+            </div>
+
+            <div className="p-3 rounded-lg bg-blue-500/5 border border-blue-500/20">
+              <div className="flex items-center gap-1.5 mb-1.5">
+                <div className="w-1.5 h-1.5 rounded-full bg-blue-500" />
+                <span className="text-[10px] font-bold text-blue-400 uppercase tracking-wider">Recommended Action</span>
+              </div>
+              <p className="text-[11px] text-slate-300 leading-relaxed">{explainSafetyAction(p)}</p>
+            </div>
+
+            <div className="p-3 rounded-lg bg-amber-500/5 border border-amber-500/20">
+              <div className="flex items-center gap-1.5 mb-1.5">
+                <div className="w-1.5 h-1.5 rounded-full bg-amber-500" />
+                <span className="text-[10px] font-bold text-amber-400 uppercase tracking-wider">Emergency & Resource Access</span>
+              </div>
+              <p className="text-[11px] text-slate-300 leading-relaxed">{explainEmergencyAccess(p)}</p>
+            </div>
+
+            <div className="text-center">
+              <span className="text-[9px] text-slate-500 italic">Explainable AI — every insight traces to Montgomery open data</span>
+            </div>
+          </div>
+        )}
+      </div>
 
       {/* Zone info */}
       <div className="px-4 py-3 border-t border-slate-700 text-xs text-slate-500">
