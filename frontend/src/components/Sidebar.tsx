@@ -62,7 +62,7 @@ export default function Sidebar({ data, onSelect, selected }: Props) {
   }, [data, sortBy, search]);
 
   return (
-    <div className="w-[320px] h-full bg-slate-900 border-r border-slate-700 flex flex-col z-[1000]">
+    <div className="w-full md:w-[320px] h-full bg-slate-900 md:border-r border-slate-700 flex flex-col z-[1000]">
       {/* Logo & Title */}
       <div className="p-4 border-b border-slate-700">
         <h1 className="text-xl font-black text-white tracking-tight">
