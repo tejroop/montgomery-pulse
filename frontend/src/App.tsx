@@ -8,6 +8,7 @@ import CityHeader from './components/CityHeader';
 import { FacilityTogglePanel } from './components/FacilityMarkers';
 import SafetyChatPanel from './components/SafetyChatPanel';
 import SafetyAssistantPage from './components/SafetyAssistantPage';
+import InstallPrompt from './components/InstallPrompt';
 import type { NeighborhoodCollection, NeighborhoodFeature } from './types';
 
 type Page = 'map' | 'assistant';
@@ -248,6 +249,9 @@ function App() {
           </button>
         </div>
       </div>
+
+      {/* PWA Install Prompt */}
+      <InstallPrompt />
     </div>
   );
 }
