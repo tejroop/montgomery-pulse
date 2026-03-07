@@ -92,7 +92,7 @@ function App() {
   }
 
   return (
-    <div className="flex flex-col w-full h-full">
+    <div className="flex flex-col w-full" style={{ height: '100dvh' }}>
       {/* Header - hidden on mobile to save space */}
       <div className="hidden md:block">
         <CityHeader data={data} />
@@ -163,7 +163,7 @@ function App() {
 
         {/* Mobile content area */}
         {mobilePanel === 'map' ? (
-          <div className="flex-1 relative">
+          <div className="flex-1 relative" style={{ minHeight: 0 }}>
             <SafetyMap
               data={data}
               selected={selected}

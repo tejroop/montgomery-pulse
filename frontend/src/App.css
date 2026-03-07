@@ -109,8 +109,24 @@ html, body, #root {
 }
 
 @media (max-width: 768px) {
-  /* Stack sidebar below map on mobile */
   .flex-1.relative {
     min-height: 50vh;
   }
+
+  /* Fix mobile viewport height (accounts for browser chrome) */
+  html, body, #root {
+    height: 100dvh;
+    height: -webkit-fill-available;
+  }
+}
+
+/* Ensure Leaflet map fills its container on mobile */
+.leaflet-container {
+  width: 100% !important;
+  height: 100% !important;
+  position: absolute !important;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
 }
