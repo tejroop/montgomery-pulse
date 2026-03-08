@@ -1,9 +1,47 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useMemo } from 'react';
 import { MapContainer, TileLayer, GeoJSON, useMap, ZoomControl } from 'react-leaflet';
 import L from 'leaflet';
 import type { NeighborhoodCollection, NeighborhoodFeature } from '../types';
 import { getScoreColor } from '../utils';
 import FacilityMarkers from './FacilityMarkers';
+
+/** Validate that a coordinate pair [lng, lat] contains finite numbers */
+function isValidCoord(coord: unknown): boolean {
+  if (!Array.isArray(coord) || coord.length < 2) return false;
+  return Number.isFinite(coord[0]) && Number.isFinite(coord[1]);
+}
+
+/** Validate that an entire coordinate ring (array of [lng, lat]) is valid */
+function isValidRing(ring: unknown): boolean {
+  if (!Array.isArray(ring) || ring.length < 3) return false;
+  return ring.every(isValidCoord);
+}
+
+/** Check if a GeoJSON feature has valid geometry coordinates */
+function hasValidGeometry(feature: any): boolean {
+  try {
+    const geom = feature?.geometry;
+    if (!geom?.type || !geom?.coordinates) return false;
+
+    if (geom.type === 'Polygon') {
+      return Array.isArray(geom.coordinates) && geom.coordinates.every(isValidRing);
+    }
+    if (geom.type === 'MultiPolygon') {
+      return Array.isArray(geom.coordinates) &&
+        geom.coordinates.every((poly: any) => Array.isArray(poly) && poly.every(isValidRing));
+    }
+    if (geom.type === 'Point') {
+      return isValidCoord(geom.coordinates);
+    }
+    if (geom.type === 'LineString') {
+      return Array.isArray(geom.coordinates) && geom.coordinates.every(isValidCoord);
+    }
+    // For other geometry types, try optimistically
+    return true;
+  } catch {
+    return false;
+  }
+}
 
 interface SafetyMapProps {
   data: NeighborhoodCollection | null;
@@ -16,9 +54,21 @@ interface SafetyMapProps {
 function FlyToSelected({ selected }: { selected: NeighborhoodFeature | null }) {
   const map = useMap();
   useEffect(() => {
-    if (selected) {
-      const bounds = L.geoJSON(selected.geometry as any).getBounds();
+    if (!selected) return;
+    try {
+      if (!hasValidGeometry(selected)) {
+        console.warn('FlyToSelected: skipping feature with invalid geometry', selected.properties?.id);
+        return;
+      }
+      const layer = L.geoJSON(selected.geometry as any);
+      const bounds = layer.getBounds();
+      if (!bounds.isValid()) {
+        console.warn('FlyToSelected: computed bounds are invalid', selected.properties?.id);
+        return;
+      }
       map.flyToBounds(bounds, { padding: [80, 80], maxZoom: 14, duration: 0.8 });
+    } catch (err) {
+      console.warn('FlyToSelected: error flying to feature', selected.properties?.id, err);
     }
   }, [selected, map]);
   return null;
@@ -26,6 +76,20 @@ function FlyToSelected({ selected }: { selected: NeighborhoodFeature | null }) {
 
 export default function SafetyMap({ data, selected, onSelect, showFacilities, activeCategories }: SafetyMapProps) {
   const geoJsonRef = useRef<L.GeoJSON | null>(null);
+
+  // Filter out features with invalid coordinates to prevent Leaflet NaN crashes
+  const safeData = useMemo(() => {
+    if (!data) return null;
+    const validFeatures = data.features.filter(f => {
+      const valid = hasValidGeometry(f);
+      if (!valid) console.warn('Filtered out feature with invalid geometry:', f.properties?.id, f.properties?.name);
+      return valid;
+    });
+    if (validFeatures.length !== data.features.length) {
+      console.warn(`Filtered ${data.features.length - validFeatures.length} features with invalid geometry`);
+    }
+    return { ...data, features: validFeatures } as NeighborhoodCollection;
+  }, [data]);
 
   const style = (feature: any) => {
     const score = feature.properties.composite_score;
@@ -82,11 +146,11 @@ export default function SafetyMap({ data, selected, onSelect, showFacilities, ac
         attribution='&copy; <a href="https://carto.com/">CARTO</a>'
         url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
       />
-      {data && (
+      {safeData && (
         <GeoJSON
           key={selected?.properties.id || 'all'}
           ref={geoJsonRef as any}
-          data={data as any}
+          data={safeData as any}
           style={style}
           onEachFeature={onEachFeature}
         />

@@ -37,7 +37,7 @@ export default function FacilityMarkers({ visible, activeCategories }: Props) {
 
         return (
           <LayerGroup key={key}>
-            {category.points.map((pt, i) => (
+            {category.points.filter(pt => Number.isFinite(pt.lat) && Number.isFinite(pt.lng)).map((pt, i) => (
               <CircleMarker
                 key={`${key}-${i}`}
                 center={[pt.lat, pt.lng]}

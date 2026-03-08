@@ -18,6 +18,7 @@ export default function SafetyAssistantPage({ data, onNavigateToMap }: Props) {
   const [input, setInput] = useState('');
   const [isTyping, setIsTyping] = useState(false);
   const [selectedNeighborhood, setSelectedNeighborhood] = useState<NeighborhoodFeature | null>(null);
+  const [mobileTab, setMobileTab] = useState<'chat' | 'browse'>('chat');
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -66,32 +67,48 @@ export default function SafetyAssistantPage({ data, onNavigateToMap }: Props) {
   } : null;
 
   return (
-    <div className="w-full h-full flex flex-col bg-slate-900">
+    <div className="w-full flex flex-col bg-slate-900" style={{ height: '100dvh' }}>
       {/* Header */}
-      <div className="px-6 py-4 bg-slate-800 border-b border-slate-700 flex items-center justify-between flex-shrink-0">
-        <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center">
-            <span className="text-xl">🧠</span>
+      <div className="px-4 md:px-6 py-3 md:py-4 bg-slate-800 border-b border-slate-700 flex items-center justify-between flex-shrink-0">
+        <div className="flex items-center gap-2 md:gap-3">
+          <div className="w-8 h-8 md:w-10 md:h-10 rounded-xl bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center">
+            <span className="text-base md:text-xl">🧠</span>
           </div>
           <div>
-            <h1 className="text-lg font-bold text-white">
+            <h1 className="text-sm md:text-lg font-bold text-white">
               Safety <span className="text-emerald-400">Assistant</span>
             </h1>
-            <p className="text-[11px] text-slate-400">Explainable AI for Community Safety</p>
+            <p className="text-[10px] md:text-[11px] text-slate-400 hidden md:block">Explainable AI for Community Safety</p>
           </div>
         </div>
         <button
           onClick={() => onNavigateToMap()}
-          className="flex items-center gap-2 px-4 py-2 rounded-lg bg-slate-700 hover:bg-slate-600 transition-colors text-sm text-slate-200 font-medium"
+          className="flex items-center gap-1.5 md:gap-2 px-3 md:px-4 py-1.5 md:py-2 rounded-lg bg-slate-700 hover:bg-slate-600 transition-colors text-xs md:text-sm text-slate-200 font-medium"
         >
-          <span>🗺️</span> Back to Map
+          <span>🗺️</span> <span className="hidden md:inline">Back to</span> Map
+        </button>
+      </div>
+
+      {/* Mobile tab switcher */}
+      <div className="flex md:hidden bg-slate-800/80 border-b border-slate-700 flex-shrink-0">
+        <button
+          onClick={() => setMobileTab('chat')}
+          className={`flex-1 py-2 text-xs font-semibold text-center transition-colors ${mobileTab === 'chat' ? 'text-emerald-400 border-b-2 border-emerald-400' : 'text-slate-500'}`}
+        >
+          🧠 Chat
+        </button>
+        <button
+          onClick={() => setMobileTab('browse')}
+          className={`flex-1 py-2 text-xs font-semibold text-center transition-colors ${mobileTab === 'browse' ? 'text-emerald-400 border-b-2 border-emerald-400' : 'text-slate-500'}`}
+        >
+          ⚠️ Safety Deserts
         </button>
       </div>
 
       {/* Main */}
-      <div className="flex flex-1 overflow-hidden">
-        {/* Sidebar — Neighborhood browser */}
-        <div className="w-[300px] border-r border-slate-700 bg-slate-800/50 flex flex-col flex-shrink-0">
+      <div className="flex flex-1 overflow-hidden" style={{ minHeight: 0 }}>
+        {/* Sidebar — Neighborhood browser (desktop always, mobile when browsing) */}
+        <div className={`${mobileTab === 'browse' ? 'flex' : 'hidden'} md:flex w-full md:w-[300px] border-r border-slate-700 bg-slate-800/50 flex-col flex-shrink-0`}>
           {/* Stats */}
           {stats && (
             <div className="p-4 border-b border-slate-700">
@@ -134,6 +151,7 @@ export default function SafetyAssistantPage({ data, onNavigateToMap }: Props) {
                     setSelectedNeighborhood(isActive ? null : feature);
                     if (!isActive) {
                       handleSend(`Why is ${p.name} rated this way?`);
+                      setMobileTab('chat');
                     }
                   }}
                   className={`w-full text-left px-4 py-3 border-b border-slate-800 transition-colors hover:bg-slate-800 ${
@@ -175,8 +193,8 @@ export default function SafetyAssistantPage({ data, onNavigateToMap }: Props) {
         </div>
 
         {/* Chat area */}
-        <div className="flex-1 flex flex-col">
-          <div className="flex-1 overflow-y-auto px-8 py-6">
+        <div className={`${mobileTab === 'chat' ? 'flex' : 'hidden'} md:flex flex-1 flex-col`} style={{ minHeight: 0 }}>
+          <div className="flex-1 overflow-y-auto px-4 md:px-8 py-4 md:py-6">
             {messages.length === 0 ? (
               <div className="max-w-2xl mx-auto">
                 <div className="text-center mb-8 pt-8">
@@ -191,7 +209,7 @@ export default function SafetyAssistantPage({ data, onNavigateToMap }: Props) {
                   </p>
                 </div>
 
-                <div className="grid grid-cols-2 gap-3">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-3">
                   {suggestions.map((q, i) => (
                     <button
                       key={i}
@@ -270,28 +288,28 @@ export default function SafetyAssistantPage({ data, onNavigateToMap }: Props) {
           </div>
 
           {/* Input */}
-          <div className="px-8 py-4 border-t border-slate-700 bg-slate-800/50 flex-shrink-0">
-            <div className="max-w-2xl mx-auto flex gap-3">
+          <div className="px-3 md:px-8 py-3 md:py-4 border-t border-slate-700 bg-slate-800/50 flex-shrink-0">
+            <div className="max-w-2xl mx-auto flex gap-2 md:gap-3">
               <input
                 ref={inputRef}
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 onKeyDown={handleKeyDown}
-                placeholder="Ask about neighborhoods, Safety Deserts, emergency coverage..."
-                className="flex-1 px-4 py-3 rounded-xl bg-slate-800 border border-slate-600 text-sm text-slate-200 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-500/50"
+                placeholder="Ask about safety..."
+                className="flex-1 px-3 md:px-4 py-2.5 md:py-3 rounded-xl bg-slate-800 border border-slate-600 text-sm text-slate-200 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-500/50"
               />
               <button
                 onClick={() => handleSend(input)}
                 disabled={!input.trim() || isTyping}
-                className="px-5 py-3 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-600 text-white font-semibold text-sm hover:from-emerald-400 hover:to-teal-500 disabled:opacity-40 transition-all flex items-center gap-2"
+                className="px-4 md:px-5 py-2.5 md:py-3 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-600 text-white font-semibold text-sm hover:from-emerald-400 hover:to-teal-500 disabled:opacity-40 transition-all flex items-center gap-1.5 md:gap-2"
               >
-                Send
+                <span className="hidden md:inline">Send</span>
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
                 </svg>
               </button>
             </div>
-            <div className="max-w-2xl mx-auto mt-2 text-center">
+            <div className="max-w-2xl mx-auto mt-1.5 md:mt-2 text-center hidden md:block">
               <span className="text-[10px] text-slate-500">
                 Explainable AI · Every answer traces to Montgomery open data · No black boxes
               </span>
